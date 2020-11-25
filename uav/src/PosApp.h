@@ -113,6 +113,9 @@ class PosApp : public flair::meta::UavStateMachine {
 
         void GetReferenceQuaternion(flair::core::Quaternion &refQuat, flair::core::Vector3Df &refOmega);
 
+        void GetUAVOrientation(flair::core::Quaternion &uavQuaternion, flair::core::Vector3Df &uavAngSpeed);
+ 
+
 
         flair::core::Vector3Df VectorialProduct(flair::core::Vector3Df m, flair::core::Vector3Df v);
 

@@ -443,21 +443,29 @@ void PosApp::ComputeCustomTorques(Euler &torques){
   Quaternion refQuaternion;
   Vector3Df refAngularRates;
 
+  // Computes the reference quaternion, (from Joystick or from position control)
   GetReferenceQuaternion(refQuaternion, refAngularRates);
 
   
-
-  // Obtain the Quadrotor Attitude
-  const AhrsData *currentOrientation = GetOrientation();
-  
-  // STATES IN QUATERNION
+  // Computes the quadrotor attitude
   Quaternion currentQuaternion;
   Vector3Df currentAngularRates;
 
+  // Computes the quadrotor attitude
+  // Manual -> IMU
+  // Custom -> IMU with Optitrak
+  GetUAVOrientation(currentQuaternion, currentAngularRates);
+
+  // Obtain the Quadrotor Attitude
+  //const AhrsData *currentOrientation = GetOrientation();
+  
+  // STATES IN QUATERNION
+  //Quaternion currentQuaternion;
+  //Vector3Df currentAngularRates;
+
   //AddDataToControlLawLog(currentQuaternion);
   // FILLING THE QUATERNION AND THE ANGULAR RATE
-  currentOrientation->GetQuaternionAndAngularRates(currentQuaternion,
-                                                   currentAngularRates);
+  //currentOrientation->GetQuaternionAndAngularRates(currentQuaternion,currentAngularRates);
 
 
   attQuat->SetValues(currentQuaternion.q0,currentQuaternion.q1,currentQuaternion.q2,currentQuaternion.q3,
@@ -482,9 +490,17 @@ void PosApp::GetReferenceQuaternion(flair::core::Quaternion &refQuat, flair::cor
     refOrientation->GetQuaternionAndAngularRates(refQuat, refOmega);
     //cout << "PosCtrl   " << endl; 
     } 
-    //cout << "Qd0: " <<  refQuat.q0 << "     Qd1: " << refQuat.q1 << "    ";
-    //cout << "Qd2: " <<  refQuat.q2 << "     Qd1: " << refQuat.q3 << endl; 
 } 
+
+void PosApp::GetUAVOrientation(flair::core::Quaternion &uavQuaternion, flair::core::Vector3Df &uavAngSpeed){
+    if(GetOrientationMode() == OrientationMode_t::Manual){
+        GetDefaultOrientation()->GetQuaternionAndAngularRates(uavQuaternion, uavAngSpeed);
+    }
+  else{
+      const AhrsData *currentOrientation = GetOrientation();
+      currentOrientation->GetQuaternionAndAngularRates(uavQuaternion,uavAngSpeed);
+    } 
+}
 
 /******************************************************************************************************
                     ComputeCustomThrust
