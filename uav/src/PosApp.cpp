@@ -100,17 +100,17 @@ PosApp::PosApp(TargetController *controller): UavStateMachine(controller), behav
     z_Ctrl = new zBackstepping(setup_myTab->At(0,2),"zCtrl");
     z_Ctrl->UseDefaultPlot(graph_law_angles->NewRow());
 
-    xCtrl = new xyBackstepping(setup_myTab->At(0,0),"xCtrl-PD");
+    xCtrl = new xyBackstepping(setup_myTab->At(0,0),"xCtrl-BKSTP");
     xCtrl->UseDefaultPlot(graph_law_angles->LastRowLastCol());
 
-    yCtrl = new xyBackstepping(setup_myTab->At(0,1),"yCtrl-PD");
+    yCtrl = new xyBackstepping(setup_myTab->At(0,1),"yCtrl-BKSTP");
     yCtrl->UseDefaultPlot(graph_law_angles->LastRowLastCol());
 
     attQuat = new attQuatBkstp(setup_myTab->At(1,1),"Attitude Quaternion");
     attQuat->UseDefaultPlot(graph_law_angles->LastRowLastCol());
 
     GroupBox *PosRef = new GroupBox(setup_myTab->At(1,0),"Position References");
-    x_des = new DoubleSpinBox(PosRef->NewRow(),"x_des:",-5,5,1,1);
+    x_des = new DoubleSpinBox(PosRef->NewRow(),"x_des:",-10,10,1,1);
     y_des = new DoubleSpinBox(PosRef->NewRow(),"y_des:",-5,5,1,1);
     z_des = new DoubleSpinBox(PosRef->NewRow(),"z_des:",-5,5,1,1,1);
 

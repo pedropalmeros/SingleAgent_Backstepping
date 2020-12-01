@@ -113,10 +113,12 @@ attQuatBkstp_impl::~attQuatBkstp_impl(void) {}
 
 void attQuatBkstp_impl::UseDefaultPlot(const LayoutPosition *position) {
   DataPlot1D *plot = new DataPlot1D(position, self->ObjectName(), -1, 1);
-  plot->AddCurve(state->Element(0));
-  plot->AddCurve(state->Element(1), DataPlot::Green);
-  plot->AddCurve(state->Element(2), DataPlot::Blue);
-  plot->AddCurve(state->Element(3), DataPlot::Black);
+  plot->AddCurve(state->Element(12), DataPlot::Black);
+  plot->AddCurve(state->Element(13), DataPlot::Black);
+  plot->AddCurve(state->Element(14), DataPlot::Black);
+  plot->AddCurve(state->Element(15), DataPlot::Red);
+  plot->AddCurve(state->Element(16), DataPlot::Red);
+  plot->AddCurve(state->Element(17), DataPlot::Red);
 }
 
 void attQuatBkstp_impl::UpdateFrom(const io_data *data) {
