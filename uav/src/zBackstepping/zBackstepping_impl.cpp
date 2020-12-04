@@ -69,11 +69,9 @@ zBackstepping_impl::~zBackstepping_impl(void) {}
 
 void zBackstepping_impl::UseDefaultPlot(const LayoutPosition *position) {
   DataPlot1D *plot = new DataPlot1D(position, self->ObjectName(), -1, 1);
-  plot->AddCurve(state->Element(0));
-  plot->AddCurve(state->Element(1), DataPlot::Green);
-  plot->AddCurve(state->Element(2), DataPlot::Blue);
-  plot->AddCurve(state->Element(3), DataPlot::Black);
-  plot->AddCurve(state->Element(4), DataPlot::Yellow);
+  plot->AddCurve(state->Element(0), DataPlot::Black);
+  plot->AddCurve(state->Element(1), DataPlot::Red);
+
 }
 
 void zBackstepping_impl::UpdateFrom(const io_data *data) {
@@ -116,7 +114,7 @@ void zBackstepping_impl::UpdateFrom(const io_data *data) {
 
   state->GetMutex();
   state->SetValueNoMutex(0, 0, position);
-  state->SetValueNoMutex(1, 0, position);
+  state->SetValueNoMutex(1, 0, ref_position);
   state->SetValueNoMutex(2, 0, position);
   state->SetValueNoMutex(3, 0, position);
   state->SetValueNoMutex(4, 0, position);
